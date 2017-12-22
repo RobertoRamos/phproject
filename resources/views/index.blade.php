@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    Yay testing
+    <h1>{{ config('app.name', 'Phproject') }}</h1>
 </div>
 @endsection

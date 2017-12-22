@@ -10,6 +10,7 @@ Requires Composer and Yarn. Start by coping `.env.example` to `.env`, adding you
 composer install
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 yarn && yarn dev
 ```
 

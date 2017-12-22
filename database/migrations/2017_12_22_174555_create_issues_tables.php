@@ -22,8 +22,6 @@ class CreateIssuesTables extends Migration
             $table->increments('id');
             $table->string('name', 180)->unique();
             $table->unsignedTinyInteger('closed')->default(0)->index();
-            $table->unsignedTinyInteger('taskboard')->default(0)->index();
-            $table->unsignedTinyInteger('taskboard_sort');
         });
         Schema::create('issue_priorities', function (Blueprint $table) {
             $table->increments('id');
@@ -39,7 +37,7 @@ class CreateIssuesTables extends Migration
             $table->string('name');
             $table->string('size_estimate', 20);
             $table->text('description');
-            $table->unsignedInteger('parent_id');
+            $table->unsignedInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('issues');
             $table->unsignedInteger('author_id');
             $table->foreign('author_id')->references('id')->on('users');

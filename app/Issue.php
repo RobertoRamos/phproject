@@ -57,4 +57,20 @@ class Issue extends Model
     {
         return $this->belongsTo('App\User', 'owner_id');
     }
+
+    /**
+     * Get the parent issue, if any
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\Issue', 'parent_id');
+    }
+
+    /**
+     * Get the child issues, if any
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Issue', 'parent_id');
+    }
 }
