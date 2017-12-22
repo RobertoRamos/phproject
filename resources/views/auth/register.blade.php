@@ -20,10 +20,30 @@
                                         name="name"
                                         value="{{ old('name') }}"
                                         required
+                                        autofocus
                                 >
                                 @if ($errors->has('name'))
+                                <div class="invalid-feedback">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-lg-right">Username</label>
+
+                            <div class="col-lg-6">
+                                <input
+                                        type="text"
+                                        class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                                        name="username"
+                                        value="{{ old('username') }}"
+                                        required
+                                >
+                                @if ($errors->has('username'))
                                     <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('username') }}</strong>
                                     </div>
                                 @endif
                             </div>

@@ -8,6 +8,7 @@ Requires Composer and Yarn. Start by coping `.env.example` to `.env`, adding you
 
 ```bash
 composer install
+php artisan key:generate
 php artisan migrate
 yarn && yarn dev
 ```
