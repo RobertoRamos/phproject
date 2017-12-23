@@ -33,7 +33,7 @@
                         </a>
                         <div class="dropdown-menu">
                             @foreach ($issuePriorities as $priorities)
-                            <a class="dropdown-item" href="#" data-id="{{ $priorities->id }}">{{ $priorities->name }}</a>
+                                <a class="dropdown-item" href="#" data-id="{{ $priorities->id }}">{{ $priorities->name }}</a>
                             @endforeach
                         </div>
                     </li>

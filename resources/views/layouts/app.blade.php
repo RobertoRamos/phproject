@@ -8,7 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Phproject') }}</title>
+    @if (isset($title))
+        <title>{{ $title }} &ndash; {{ config('app.name', 'Phproject') }}</title>
+    @else
+        <title>{{ config('app.name', 'Phproject') }}</title>
+    @endif
 
     <!-- Styles -->
     <link href="{{ asset('css/' . env('THEME', 'app') . '.css') }}" rel="stylesheet">
@@ -70,6 +74,9 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
+                                <a href="{{ route('user', ['user' => Auth::user()]) }}" class="dropdown-item">Profile</a>
+                                <a href="{{ route('settings') }}" class="dropdown-item">Settings</a>
+                                <div class="dropdown-divider"></div>
                                 <a href="{{ route('logout') }}" class="dropdown-item"
                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Log Out

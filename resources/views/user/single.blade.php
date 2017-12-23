@@ -38,10 +38,10 @@
             </ul>
             <div class="tab-content mt-3">
                 <div class="tab-pane active" id="tab-content-assigned" aria-labelledby="tab-assigned">
-                    @include('blocks.issues.list', ['issues' => $user->authoredIssues])
+                    @include('blocks.issues.list', ['issues' => $user->ownedIssues])
                 </div>
                 <div class="tab-pane" id="tab-content-created" aria-labelledby="tab-created">
-                    @include('blocks.issues.list', ['issues' => $user->ownedIssues])
+                    @include('blocks.issues.list', ['issues' => $user->authoredIssues])
                 </div>
             </div>
         </div>

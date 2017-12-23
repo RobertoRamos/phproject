@@ -30,7 +30,8 @@ class IssueController extends Controller
         return view('issues.browse')
             ->with('issues', $issues)
             ->with('issuePriorities', \App\IssuePriority::all())
-            ->with('issueStatuses', \App\IssueStatus::all());
+            ->with('issueStatuses', \App\IssueStatus::all())
+            ->with('title', 'Issues');
     }
 
     /**
@@ -41,7 +42,9 @@ class IssueController extends Controller
      */
     public function single(\App\Issue $issue)
     {
-        return view('issues.single')->with('issue', $issue);
+        return view('issues.single')
+                ->with('issue', $issue)
+                ->with('title', sprintf('#%s %s', $issue->id, $issue->name));
     }
 
     /**
@@ -59,7 +62,8 @@ class IssueController extends Controller
                 ->with('specifiedType', $type)
                 ->with('issueStatuses', $statuses)
                 ->with('issuePriorities', $priorities)
-                ->with('users', $users);
+                ->with('users', $users)
+                ->with('title', 'New Issue');
     }
 
     /**

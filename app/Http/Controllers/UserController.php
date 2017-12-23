@@ -48,6 +48,18 @@ class UserController extends Controller
             'ownedIssues.status',
             'ownedIssues.priority',
         ]);
-        return view('user.single')->with('user', $user);
+        return view('user.single')
+                ->with('user', $user)
+                ->with('title', $user->name);
+    }
+
+    /**
+     * Show user settings page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function settings()
+    {
+        return view('user.settings')->with('title', 'Settings');
     }
 }

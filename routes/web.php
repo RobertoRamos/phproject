@@ -6,6 +6,7 @@ Auth::routes();
 
 Route::get('/dashboard', 'UserController@index')->name('dashboard');
 Route::get('/user/{user}', 'UserController@single')->name('user');
+Route::get('/settings', 'UserController@settings')->name('settings');
 
 Route::get('/issues', 'IssueController@index')->name('issues');
 Route::get('/issues/{issue}', 'IssueController@single')->name('issue_single');
