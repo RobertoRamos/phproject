@@ -14,27 +14,33 @@ class IssueMetaSeeder extends Seeder
         DB::table('issue_types')->insert([
             'name' => 'Task',
             'role' => 'task',
-        ])->insert([
+        ]);
+        DB::table('issue_types')->insert([
             'name' => 'Project',
             'role' => 'project',
-        ])->insert([
+        ]);
+        DB::table('issue_types')->insert([
             'name' => 'Bug',
             'role' => 'bug',
         ]);
         DB::table('issue_statuses')->insert([
             'name' => 'New',
-        ])->insert([
+        ]);
+        DB::table('issue_statuses')->insert([
             'name' => 'Active',
-        ])->insert([
+        ]);
+        DB::table('issue_statuses')->insert([
             'name' => 'Closed',
         ]);
         DB::table('issue_priorities')->insert([
             'value' => 0,
             'name' => 'Normal',
-        ])->insert([
+        ]);
+        DB::table('issue_priorities')->insert([
             'value' => 1,
             'name' => 'High',
-        ])->insert([
+        ]);
+        DB::table('issue_priorities')->insert([
             'value' => -1,
             'name' => 'Low',
         ]);
