@@ -26,4 +26,24 @@ class UserController extends Controller
         $issues = \App\Issue::where('owner_id', Auth::id())->get();
         return view('dashboard')->with('issues', $issues);
     }
+
+    /**
+     * Show a single user page.
+     *
+     * @param  \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function single(\App\User $user)
+    {
+        // Preload issue metadata
+        $user->load([
+            'authoredIssues.type',
+            'authoredIssues.status',
+            'authoredIssues.priority',
+            'ownedIssues.type',
+            'ownedIssues.status',
+            'ownedIssues.priority',
+        ]);
+        return view('user.single')->with('user', $user);
+    }
 }

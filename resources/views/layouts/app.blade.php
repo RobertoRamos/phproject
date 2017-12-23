@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg {{ env('THEME', 'app') == 'app-dark' ? 'navbar-dark bg-inverse' : 'navbar-light bg-light' }}">
+    <nav class="navbar navbar-expand-lg {{ env('THEME', 'app') == 'app-dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' }}">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Phproject') }}
@@ -25,18 +25,51 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    @if (!Auth::guest())
+                        <li class="nav-item dropdown">
+                            <a href="{{ route('new_issue') }}" class="nav-link dropdown-toggle" id="navbarDropdownNew" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">New</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNew">
+                                @foreach ($issueTypes as $type)
+                                    <a href="{{ route('new_issue', ['type' => $type->id]) }}" class="dropdown-item">
+                                        {{ $type->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="{{ route('issues') }}" class="nav-link dropdown-toggle" id="navbarDropdownBrowse" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Browse</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBrowse">
+                                <a href="{{ route('issues') }}" class="dropdown-item">Open</a>
+                                <a href="{{ route('issues') }}" class="dropdown-item">Closed</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ route('issues') }}" class="dropdown-item">Created by me</a>
+                                <a href="{{ route('issues') }}" class="dropdown-item">Assigned to me</a>
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">By type</h6>
+                                @foreach ($issueTypes as $type)
+                                    <a href="{{ route('issues') }}" class="dropdown-item">
+                                        {{ $type->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </li>
+                    @endif
+                </ul>
                 <ul class="navbar-nav">
                     @if (Auth::guest())
                         <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
                         <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
                     @else
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownUser" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
                                 <a href="{{ route('logout') }}" class="dropdown-item"
                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout

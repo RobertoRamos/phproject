@@ -39,7 +39,7 @@ class Issue extends Model
      */
     public function priority()
     {
-        return $this->belongsTo('App\IssuePriority', 'priority', 'value');
+        return $this->belongsTo('App\IssuePriority', 'priority_value', 'value');
     }
 
     /**

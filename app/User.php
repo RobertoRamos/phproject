@@ -30,11 +30,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
+    /**
      * Get all authored issues
      */
     public function authoredIssues()
     {
-        return $this->hasMany('Issue', 'author_id');
+        return $this->hasMany('App\Issue', 'author_id');
     }
 
     /**
@@ -42,6 +52,6 @@ class User extends Authenticatable
      */
     public function ownedIssues()
     {
-        return $this->hasMany('Issue', 'owner_id');
+        return $this->hasMany('App\Issue', 'owner_id');
     }
 }

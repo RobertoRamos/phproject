@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Issue_Priority extends Model
+class IssuePriority extends Model
 {
     //
 }

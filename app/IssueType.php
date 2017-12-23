@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Issue_Type extends Model
+class IssueType extends Model
 {
     //
 }

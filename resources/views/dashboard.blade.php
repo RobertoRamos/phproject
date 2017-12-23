@@ -14,9 +14,7 @@
         </div>
         <div class="list-group list-group-flush">
             @foreach ($issues as $issue)
-                <a class="list-group-item list-group-item-action" href="{{ url('/issues/{$issue->id}') }}">
-                    {{ $issue->name }}
-                </a>
+                @include('blocks/issue-list-item', ['issue' => $issue])
             @endforeach
         </div>
     </div>
