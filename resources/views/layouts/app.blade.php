@@ -11,11 +11,11 @@
     <title>{{ config('app.name', 'Phproject') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/' . env('THEME', 'app') . '.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg {{ env('THEME', 'app') == 'app-dark' ? 'navbar-dark bg-inverse' : 'navbar-light bg-light' }}">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Phproject') }}
