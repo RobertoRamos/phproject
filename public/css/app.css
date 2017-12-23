@@ -9722,3 +9722,7 @@ a.text-dark:hover {
   padding-bottom: 2rem;
 }
 
+.line-height-sm {
+  line-height: 1.15;
+}
+

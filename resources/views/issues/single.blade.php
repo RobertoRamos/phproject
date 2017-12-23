@@ -17,10 +17,10 @@
     <div class="row">
         <div class="col-sm-3 order-sm-2">
             <h4>Author</h4>
-            @include('blocks/user-tiny', ['user' => $issue->author])
+            @include('blocks.user-tiny', ['user' => $issue->author])
 
             <h4>Assigned to</h4>
-            @include('blocks/user-tiny', ['user' => $issue->owner])
+            @include('blocks.user-tiny', ['user' => $issue->owner])
 
             <h4>Watchers</h4>
             <p>(TODO)</p>

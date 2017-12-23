@@ -1,4 +1,3 @@
-
 // Body
 $body-bg: #fff;
 
@@ -23,3 +22,6 @@ $text-color: #636b6f;
 // Inputs
 $input-border-color: lighten($text-color, 40%);
 $input-placeholder-color: lighten($text-color, 30%);
+
+// Phproject-specific
+$line-height-base-sm: 1.15;

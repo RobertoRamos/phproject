@@ -31,7 +31,7 @@
                         <li class="nav-item dropdown">
                             <a href="{{ route('new_issue') }}" class="nav-link dropdown-toggle" id="navbarDropdownNew" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">New</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNew">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownNew">
                                 @foreach ($issueTypes as $type)
                                     <a href="{{ route('new_issue', ['type' => $type->id]) }}" class="dropdown-item">
                                         {{ $type->name }}
@@ -42,16 +42,16 @@
                         <li class="nav-item dropdown">
                             <a href="{{ route('issues') }}" class="nav-link dropdown-toggle" id="navbarDropdownBrowse" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Browse</a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBrowse">
-                                <a href="{{ route('issues') }}" class="dropdown-item">Open</a>
-                                <a href="{{ route('issues') }}" class="dropdown-item">Closed</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownBrowse">
+                                <a href="{{ route('issues') }}?status=open" class="dropdown-item">Open</a>
+                                <a href="{{ route('issues') }}?status=closed" class="dropdown-item">Closed</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="{{ route('issues') }}" class="dropdown-item">Created by me</a>
-                                <a href="{{ route('issues') }}" class="dropdown-item">Assigned to me</a>
+                                <a href="{{ route('issues') }}?author_id={{ Auth::id() }}" class="dropdown-item">Created by me</a>
+                                <a href="{{ route('issues') }}?owner_id={{ Auth::id() }}" class="dropdown-item">Assigned to me</a>
                                 <div class="dropdown-divider"></div>
                                 <h6 class="dropdown-header">By type</h6>
                                 @foreach ($issueTypes as $type)
-                                    <a href="{{ route('issues') }}" class="dropdown-item">
+                                    <a href="{{ route('issues') }}?type_id={{ $type->id }}" class="dropdown-item">
                                         {{ $type->name }}
                                     </a>
                                 @endforeach
@@ -71,12 +71,10 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
                                 <a href="{{ route('logout') }}" class="dropdown-item"
-                                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                    Logout
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    Log Out
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
                             </div>

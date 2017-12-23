@@ -2,9 +2,15 @@
 
 @section('content')
 <div class="jumbotron jumbotron-sm jumbotron-fluid">
-    <div class="container">
-        <h1>{{ $user->name }}</h1>
-        {{ '@' . $user->username }}
+    <div class="container d-flex">
+        <div class="mr-4">
+            {{-- TODO: set width via SCSS --}}
+            <img src="{{ asset('img/default-avatar.svg') }}" width="72" class="img-fluid rounded-circle" alt>
+        </div>
+        <div>
+            <h1>{{ $user->name }}</h1>
+            {{ '@' . $user->username }}
+        </div>
     </div>
 </div>
 <div class="container">
@@ -32,10 +38,10 @@
             </ul>
             <div class="tab-content mt-3">
                 <div class="tab-pane active" id="tab-content-assigned" aria-labelledby="tab-assigned">
-                    @include('blocks/issue-list', ['issues' => $user->authoredIssues])
+                    @include('blocks.issues.list', ['issues' => $user->authoredIssues])
                 </div>
                 <div class="tab-pane" id="tab-content-created" aria-labelledby="tab-created">
-                    @include('blocks/issue-list', ['issues' => $user->ownedIssues])
+                    @include('blocks.issues.list', ['issues' => $user->ownedIssues])
                 </div>
             </div>
         </div>

@@ -25,8 +25,12 @@ class IssueController extends Controller
      */
     public function index()
     {
-        // $issues = \App\Issue::where()->get();
-        // return view('dashboard')->with('issues', $issues);
+        // TODO: add filtering
+        $issues = \App\Issue::all();
+        return view('issues.browse')
+            ->with('issues', $issues)
+            ->with('issuePriorities', \App\IssuePriority::all())
+            ->with('issueStatuses', \App\IssueStatus::all());
     }
 
     /**
@@ -37,7 +41,7 @@ class IssueController extends Controller
      */
     public function single(\App\Issue $issue)
     {
-        return view('issue.single')->with('issue', $issue);
+        return view('issues.single')->with('issue', $issue);
     }
 
     /**
@@ -51,7 +55,7 @@ class IssueController extends Controller
         $statuses = \App\IssueStatus::all();
         $priorities = \App\IssuePriority::all()->sortByDesc('value');
         $users = \App\User::all()->sortBy('name');
-        return view('issue.new')
+        return view('issues.new')
                 ->with('specifiedType', $type)
                 ->with('issueStatuses', $statuses)
                 ->with('issuePriorities', $priorities)

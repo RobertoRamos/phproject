@@ -23,7 +23,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $issues = \App\Issue::where('owner_id', Auth::id())->get();
+        $issues = \App\Issue::with([
+            'type',
+            'status',
+            'priority',
+        ])->where('owner_id', Auth::id())->get();
         return view('dashboard')->with('issues', $issues);
     }
 
