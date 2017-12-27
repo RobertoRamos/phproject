@@ -31,6 +31,7 @@ class IssueMetaSeeder extends Seeder
         ]);
         DB::table('issue_statuses')->insert([
             'name' => 'Closed',
+            'closed' => 1,
         ]);
         DB::table('issue_priorities')->insert([
             'value' => 0,

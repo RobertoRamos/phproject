@@ -5,12 +5,25 @@
     <div class="container">
         <div class="d-flex align-items-center">
             <h1 class="mr-auto">{{ $issue->name }}</h1>
-            <div>
-                <a href="#edit" class="btn btn-secondary">Edit</a>
-                <a href="#close" class="btn btn-primary">Complete</a>
-            </div>
+            <form action="{{ route('issue_toggle_close', ['issue' => $issue]) }}" method="post">
+                {{ csrf_field() }}
+                <a href="{{ route('issue_edit', ['issue' => $issue]) }}" class="btn btn-secondary">Edit</a>
+                @if ($issue->status->closed)
+                    <button type="submit" class="btn btn-warning">Reopen</button>
+                @else
+                    <button type="submit" class="btn btn-primary">Complete</button>
+                @endif
+            </form>
         </div>
-        Created {{ $issue->created_at->diffForHumans() }}
+        Created {{ $issue->created_at->diffForHumans() }}&ensp;
+        <span class="badge badge-secondary">{{ $issue->status->name }}</span>
+        @if ($issue->priority->value == 0)
+            <span class="badge badge-secondary">{{ $issue->priority->name }}</span>
+        @elseif ($issue->priority->value < 1)
+            <span class="badge badge-info">{{ $issue->priority->name }}</span>
+        @else
+            <span class="badge badge-danger">{{ $issue->priority->name }}</span>
+        @endif
     </div>
 </div>
 <div class="container">

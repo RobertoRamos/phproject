@@ -1,4 +1,4 @@
-<form action="{{ route('new_issue_post') }}" method="post">
+<form action="{{ isset($issue) ? route('issue_edit_post', ['issue' => $issue]) : route('new_issue_post') }}" method="post">
     {{ csrf_field() }}
     <div class="form-row">
         <div class="col-md">
@@ -105,6 +105,9 @@
     </div>
 
     <div class="text-right">
+        @if (isset($issue))
+            <a href="{{ route('issue_single', ['issue' => $issue]) }}" class="btn btn-secondary">Cancel</a>
+        @endif
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </form>

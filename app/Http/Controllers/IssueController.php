@@ -55,20 +55,18 @@ class IssueController extends Controller
      */
     public function create($type = null)
     {
-        $statuses = \App\IssueStatus::all();
-        $priorities = \App\IssuePriority::all()->sortByDesc('value');
-        $users = \App\User::all()->sortBy('name');
         return view('issues.new')
                 ->with('specifiedType', $type)
-                ->with('issueStatuses', $statuses)
-                ->with('issuePriorities', $priorities)
-                ->with('users', $users)
+                ->with('issueStatuses', \App\IssueStatus::all())
+                ->with('issuePriorities', \App\IssuePriority::all()->sortByDesc('value'))
+                ->with('users', \App\User::all()->sortBy('name'))
                 ->with('title', 'New Issue');
     }
 
     /**
      * Create a new issue
      *
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function createPost(Request $request)
@@ -83,6 +81,50 @@ class IssueController extends Controller
             'owner_id' => $request->input('owner_id'),
             'description' => $request->input('description'),
         ]);
-        return redirect()->route('issue_single', ['id' => $issue->id]);
+        return redirect()->route('issue_single', ['issue' => $issue]);
+    }
+
+    /**
+     * Edit an issue
+     *
+     * @param  \App\Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(\App\Issue $issue)
+    {
+        return view('issues.edit')
+            ->with('issue', $issue)
+            ->with('issueStatuses', \App\IssueStatus::all())
+            ->with('issuePriorities', \App\IssuePriority::all()->sortByDesc('value'))
+            ->with('users', \App\User::all()->sortBy('name'))
+            ->with('title', sprintf('#%s %s', $issue->id, $issue->name));
+    }
+
+    /**
+     * Save an issue edit
+     *
+     * @param  Request $request
+     * @param  \App\Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function editPost(Request $request, \App\Issue $issue)
+    {
+        $issue->fill($request->input());
+        $issue->save();
+        return redirect()->route('issue_single', ['issue' => $issue]);
+    }
+
+    /**
+     * Close an issue
+     *
+     * @param  \App\Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleClose(\App\Issue $issue)
+    {
+        $status = \App\IssueStatus::where('closed', !$issue->status->closed)->first();
+        $issue->status_id = $status->id;
+        $issue->save();
+        return redirect()->route('issue_single', ['issue' => $issue]);
     }
 }
