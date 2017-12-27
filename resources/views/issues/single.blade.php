@@ -4,7 +4,12 @@
 <div class="jumbotron jumbotron-sm jumbotron-fluid">
     <div class="container">
         <div class="d-flex align-items-center">
-            <h1 class="mr-auto">{{ $issue->name }}</h1>
+            <h1 class="mr-auto">
+                {{ $issue->name }}
+                <small class="text-muted">
+                    {{ $issue->type->name }} #{{ $issue->id }}
+                </small>
+            </h1>
             <form action="{{ route('issue_toggle_close', ['issue' => $issue]) }}" method="post">
                 {{ csrf_field() }}
                 <a href="{{ route('issue_edit', ['issue' => $issue]) }}" class="btn btn-secondary">Edit</a>
@@ -39,7 +44,7 @@
             <p>(TODO)</p>
         </div>
         <div class="col-sm">
-            {{ $issue->description }}
+            @markdown($issue->description)
         </div>
     </div>
 </div>

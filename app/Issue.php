@@ -30,6 +30,15 @@ class Issue extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'options' => 'array',
+    ];
+
+    /**
      * Get the type of the issue
      */
     public function type()

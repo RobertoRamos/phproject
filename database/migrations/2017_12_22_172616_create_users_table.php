@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('rank', false, false)->default(0);
             $table->string('color', 6);
             $table->string('language', 8)->nullable();
-            $table->binary('options');
+            $table->text('options');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

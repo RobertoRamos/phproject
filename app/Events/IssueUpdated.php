@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Issue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -15,7 +16,8 @@ class IssueUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $issue;
+    public $issue;
+    public $user;
 
     /**
      * Create a new event instance.
@@ -26,6 +28,9 @@ class IssueUpdated
     public function __construct(Issue $issue)
     {
         $this->issue = $issue;
+        if (Auth::check()) {
+            $this->user = Auth::user();
+        }
     }
 
     /**
