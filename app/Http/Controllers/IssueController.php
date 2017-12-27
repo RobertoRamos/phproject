@@ -48,6 +48,18 @@ class IssueController extends Controller
     }
 
     /**
+     * Get a single issue's history as a JSON object
+     *
+     * @param  \App\Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function singleHistory(\App\Issue $issue)
+    {
+        $issue->loadMissing('updates.updateData', 'updates.user');
+        return response()->json($issue->updates);
+    }
+
+    /**
      * Show issue creation page
      *
      * @param  string $type

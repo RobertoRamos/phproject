@@ -93,4 +93,12 @@ class Issue extends Model
     {
         return $this->hasMany('App\Issue', 'parent_id');
     }
+
+    /**
+     * Get the issue's updates, if any
+     */
+    public function updates()
+    {
+        return $this->hasMany('App\IssueUpdate', 'issue_id');
+    }
 }

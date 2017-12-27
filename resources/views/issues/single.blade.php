@@ -44,7 +44,9 @@
             <p>(TODO)</p>
         </div>
         <div class="col-sm">
-            @markdown($issue->description)
+            <div class="markdown">
+                @markdown($issue->description)
+            </div>
         </div>
     </div>
 </div>

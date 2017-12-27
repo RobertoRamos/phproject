@@ -24,6 +24,14 @@ class IssueUpdate extends Model
     }
 
     /**
+     * Get the user
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    /**
      * Get the updated field data
      */
     public function updateData()
