@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Issue extends Model
 {
     use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that are not mass assignable.
@@ -16,6 +18,15 @@ class Issue extends Model
      */
     protected $guarded = [
         'id', 'deleted_date'
+    ];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'updated' => \App\Events\IssueUpdated::class,
     ];
 
     /**

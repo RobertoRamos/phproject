@@ -100,7 +100,7 @@
     <div class="form-group row">
         <label for="issueDescription" class="col-sm-2 col-form-label">Description</label>
         <div class="col-sm">
-            <textarea class="form-control" name="description" id="issueDescription"></textarea>
+            <textarea class="form-control" name="description" id="issueDescription">{{ isset($issue) ? $issue->description : '' }}</textarea>
         </div>
     </div>
 
