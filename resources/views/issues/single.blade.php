@@ -44,8 +44,31 @@
             <p>(TODO)</p>
         </div>
         <div class="col-sm">
-            <div class="markdown">
-                @markdown($issue->description)
+            <ul class="nav nav-pills" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab-details"
+                        data-toggle="tab" href="#tab-content-details"
+                        role="tab" aria-controls="tab-content-details" aria-selected="true">
+                        Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-changelog"
+                        data-toggle="tab" href="#tab-content-changelog"
+                        role="tab" aria-controls="tab-content-changelog" aria-selected="false">
+                        Changelog
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content mt-4">
+                <div class="tab-pane active" id="tab-content-details" aria-labelledby="tab-details">
+                    <div class="markdown">
+                        @markdown($issue->description)
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab-content-changelog" aria-labelledby="tab-changelog">
+                    <issue-history issue-id="{{ $issue->id }}"></issue-history>
+                </div>
             </div>
         </div>
     </div>
