@@ -20,7 +20,7 @@ export default {
     },
     props: {
         issueId: {
-            type: Number,
+            type: String, // used as Number
             required: true
         }
     },
