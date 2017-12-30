@@ -57542,7 +57542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     props: {
         issueId: {
-            type: Number,
+            type: String, // used as Number
             required: true
         }
     },
