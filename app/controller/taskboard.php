@@ -118,11 +118,11 @@ class Taskboard extends \Controller
 
         // Determine type filtering
         $type = new \Model\Issue\Type;
-        $projectTypes = $type->find(["role = ?", "project"]);
         $f3->set("project_types", $projectTypes);
         if ($f3->get("GET.type_id")) {
-            $typeIds =    array_filter($f3->split($f3->get("GET.type_id")), "is_numeric");
+            $typeIds = array_filter($f3->split($f3->get("GET.type_id")), "is_numeric");
         } else {
+            $projectTypes = $type->find(["role = ?", "project"]);
             $typeIds = [];
             foreach ($projectTypes as $type) {
                 $typeIds[] = $type->id;
