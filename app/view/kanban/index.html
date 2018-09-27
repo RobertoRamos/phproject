@@ -12,19 +12,19 @@
             pointer-events: none;
         }
         .kanban-swimlane {
-            margin: 0 0 15px 15px;
             width: 280px;
             min-width: 230px;
+            margin: 0 0 15px 15px;
         }
         .kanban-swimlane:last-child {
             margin-right: 15px;
         }
         .kanban-swimlane > .panel-body {
-            min-height: calc(80vh - 160px);
             max-height: calc(100vh - 160px);
+            padding-bottom: 0;
             overflow-y: auto;
         }
-        .kanban-swimlane > .panel-body > div:empty {
+        .kanban-swimlane > .panel-body > div {
             min-height: calc(80vh - 160px);
         }
         .kanban-issue {

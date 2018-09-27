@@ -3,7 +3,8 @@
 namespace Controller;
 
 use Helper\View;
-use Model\Issue\Detail as Issue;
+use Model\Issue;
+use Model\Issue\Detail as IssueDetail;
 use Model\Issue\Status;
 use Model\Issue\Type;
 use Model\Sprint;
@@ -25,7 +26,7 @@ class Kanban extends \Controller
      * @param \Base $f3
      * @param array $params
      */
-    public function index($f3, $params)
+    public function index(\Base $f3, array $params)
     {
         $group = new User;
         $group->load($params['group']);
@@ -55,7 +56,7 @@ class Kanban extends \Controller
      * Get swimlanes for the Kanban board
      * @param \Base $f3
      */
-    public function boardLanes($f3)
+    public function boardLanes(\Base $f3)
     {
         $statusModel = new Status;
         $statuses = $statusModel->find('taskboard > 0', ['order' => 'taskboard_sort ASC']);
@@ -70,7 +71,7 @@ class Kanban extends \Controller
      * Get items on the Kanban board
      * @param \Base $f3
      */
-    public function boardData($f3)
+    public function boardData(\Base $f3)
     {
         $groupId = $f3->get('GET.group');
         if (!$groupId) {
@@ -119,13 +120,35 @@ class Kanban extends \Controller
         $filter .= " AND type_id IN ($typeStr)";
 
         // Find issues
-        $issueModel = new Issue;
+        $issueModel = new IssueDetail;
         $issues = $issueModel->find($filter);
         $return = [];
         foreach ($issues as $issue) {
+            // TODO: limit fields to what's required for the board
             $return[] = $issue->cast();
         }
 
         $this->_printJson($return);
+    }
+
+    /**
+     * Handle moving issues on the board
+     *
+     * @param \Base $f3
+     * @param array $params
+     */
+    public function move(\Base $f3, array $params)
+    {
+        $issue = new Issue;
+        $issue->load($params['id']);
+        if (!$issue->id) {
+            $f3->error(404);
+            return;
+        }
+
+        $issue->status = $f3->get('POST.status');
+        $issue->save();
+
+        return $this->_printJson($issue->cast());
     }
 }

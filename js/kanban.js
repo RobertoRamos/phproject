@@ -1,5 +1,8 @@
 Vue.component('kanban-board', {
-    props: ['group-id', 'sprint-id'],
+    props: {
+        'group-id': Number,
+        'sprint-id': Number
+    },
     data: function () {
         return {
             swimlanes: [],
@@ -9,18 +12,38 @@ Vue.component('kanban-board', {
     },
     template: '\
         <div class="kanban-board" :class="isLoading && \'is-loading\'">\
-            <kanban-swimlane\
-                :key="lane.id"\
-                :name="lane.name"\
-                :issues="issuesByStatus(lane.id)"\
-                v-for="lane in swimlanes" />\
+            <div class="panel panel-default kanban-swimlane"\
+                :data-id="lane.id"\
+                v-for="lane in swimlanes">\
+                <div class="panel-heading">\
+                    {{ lane.name }}\
+                </div>\
+                <div class="panel-body">\
+                    <draggable\
+                        :options="{group: \'kanban\', draggable: \'.kanban-issue\'}"\
+                        @end="onIssueMove">\
+                        <kanban-issue\
+                            v-for="issue in issues"\
+                            v-if="issue.status == lane.id"\
+                            :key="issue.id"\
+                            :issue="issue" />\
+                    </draggable>\
+                </div>\
+            </div>\
         </div>',
     methods: {
-        issuesByStatus: function (status) {
-            return this.issues.filter(function (issue) {
-                return issue.status == status;
+        onIssueMove: function (event) {
+            let status = $(event.to).closest('.kanban-swimlane').attr('data-id');
+            let issue = this.issues[this.issues.findIndex(function (issue) {
+                return issue.id == $(event.item).attr('data-id');
+            })];
+
+            // TODO: update sort on backend
+            issue.status = status;
+            $.post(BASE + '/kanban/move/' + issue.id, {
+                status: status,
             });
-        },
+        }
     },
     mounted: function () {
         var component = this,
@@ -39,34 +62,16 @@ Vue.component('kanban-board', {
     }
 });
 
-Vue.component('kanban-swimlane', {
-    props: ['name', 'issues'],
-    data: function () {
-        return {};
+Vue.component('kanban-issue', {
+    props: {
+        'issue': Object
     },
     template: '\
-        <div class="panel panel-default kanban-swimlane">\
-            <div class="panel-heading">\
-                {{ name }}\
-            </div>\
-            <div class="panel-body">\
-                <draggable v-model="issues" :options="{group:\'kanban\'}" @start="drag=true" @end="drag=false">\
-                    <kanban-issue\
-                        :key="issue.id"\
-                        :issue="issue"\
-                        v-for="issue in issues" />\
-                </draggable>\
-            </div>\
-        </div>'
-});
-
-Vue.component('kanban-issue', {
-    props: ['issue'],
-    template: '\
-        <div class="panel panel-default kanban-issue">\
+        <div class="panel panel-default kanban-issue"\
+            :data-id="issue.id">\
             <div class="panel-body">\
                 {{ issue.name }}<br>\
-                <small>{{ issue.author_name }}</small>\
+                <small>{{ issue.owner_name }}</small>\
             </div>\
         </div>'
 });
