@@ -4,10 +4,11 @@ Vue.component('kanban-board', {
         return {
             swimlanes: [],
             issues: [],
+            isLoading: true,
         };
     },
     template: '\
-        <div class="kanban-board">\
+        <div class="kanban-board" :class="isLoading && \'is-loading\'">\
             <kanban-swimlane\
                 :key="lane.id"\
                 :name="lane.name"\
@@ -32,12 +33,12 @@ Vue.component('kanban-board', {
                 sprint: sprint,
             }, function (data) {
                 component.issues = data;
-                // TODO: enable drag-and-drop between swimlanes
-                // TODO: enable sorting items within swimlanes
+                component.isLoading = false;
             }, 'json');
         }, 'json');
     }
 });
+
 Vue.component('kanban-swimlane', {
     props: ['name', 'issues'],
     data: function () {
@@ -49,13 +50,16 @@ Vue.component('kanban-swimlane', {
                 {{ name }}\
             </div>\
             <div class="panel-body">\
-                <kanban-issue\
-                    :key="issue.id"\
-                    :issue="issue"\
-                    v-for="issue in issues" />\
+                <draggable v-model="issues" :options="{group:\'kanban\'}" @start="drag=true" @end="drag=false">\
+                    <kanban-issue\
+                        :key="issue.id"\
+                        :issue="issue"\
+                        v-for="issue in issues" />\
+                </draggable>\
             </div>\
         </div>'
 });
+
 Vue.component('kanban-issue', {
     props: ['issue'],
     template: '\
@@ -66,6 +70,7 @@ Vue.component('kanban-issue', {
             </div>\
         </div>'
 });
+
 var app = new Vue({
     el: '#root'
 });
