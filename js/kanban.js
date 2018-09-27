@@ -34,9 +34,15 @@ Vue.component('kanban-board', {
     methods: {
         onIssueMove: function (event) {
             let status = $(event.to).closest('.kanban-swimlane').attr('data-id');
-            let issue = this.issues[this.issues.findIndex(function (issue) {
-                return issue.id == $(event.item).attr('data-id');
-            })];
+            var index = null;
+            var issueId = $(event.item).attr('data-id');
+            this.issues.some(function(issue, i) {
+                if (issue.id == issueId) {
+                    index = i;
+                    return true;
+                }
+            });
+            let issue = this.issues[index];
 
             // TODO: update sort on backend
             issue.status = status;
