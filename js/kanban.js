@@ -68,6 +68,7 @@ Vue.component('kanban-issue', {
     },
     template: '\
         <div class="panel panel-default kanban-issue"\
+            :style="\'border-left-color: #\' + issue.owner_task_color"\
             :data-id="issue.id">\
             <div class="panel-body">\
                 {{ issue.name }}<br>\
