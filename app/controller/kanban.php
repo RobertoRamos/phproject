@@ -47,6 +47,7 @@ class Kanban extends \Controller
             return;
         }
 
+        $f3->set('title', 'Kanban Board');
         $f3->set('group', $group->id);
         $f3->set('sprint', $sprint->id);
         $this->_render("kanban/index.html");
