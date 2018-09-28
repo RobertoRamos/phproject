@@ -124,8 +124,15 @@ class Kanban extends \Controller
         $issues = $issueModel->find($filter);
         $return = [];
         foreach ($issues as $issue) {
-            // TODO: limit fields to what's required for the board
-            $return[] = $issue->cast();
+            $return[] = [
+                'id' => $issue->id,
+                'name' => $issue->name,
+                'status' => $issue->status,
+                'owner_id' => $issue->owner_id,
+                // TODO: get owner metadata from client-side list using computed props on kanban-issue
+                'owner_name' => $issue->owner_name,
+                'owner_task_color' => $issue->owner_task_color,
+            ];
         }
 
         $this->_printJson($return);

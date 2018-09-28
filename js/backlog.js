@@ -164,14 +164,21 @@ var Backlog = {
 			}
 			history.replaceState(state, '', BASE + path);
 		}
-		// Updates href attr if group_id is set
-		$('.sprint-board').each(function() {
-			var clickGroupId = $('.dropdown-menu .active a[data-user-ids]').attr('data-group-id');
-			var hrefLink = $(this).attr('data-base-href');
-			if (clickGroupId) {
-				$(this).attr('href', hrefLink + '/' + clickGroupId);
+
+		// Update scrum/kanban buttons by group_id
+		var clickGroupId = $('.dropdown-menu .active a[data-user-ids]').attr('data-group-id');
+		$('#tab-sprints .panel').each(function() {
+			var $kanbanBtn = $('.kanban-board', this);
+			var $scrumBtn = $('.scrum-board', this);
+			if (clickGroupId && parseInt(clickGroupId)) {
+				$kanbanBtn.attr('href', $kanbanBtn.attr('data-base-href') + '/' + clickGroupId).show();
 			} else {
-				$(this).attr('href', hrefLink);
+				$kanbanBtn.hide();
+			}
+			if (clickGroupId) {
+				$scrumBtn.attr('href', $scrumBtn.attr('data-base-href') + '/' + clickGroupId);
+			} else {
+				$scrumBtn.attr('href', $scrumBtn.attr('data-base-href'));
 			}
 		});
 	},
