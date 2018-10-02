@@ -4,6 +4,7 @@ namespace Controller;
 
 use Helper\View;
 use Model\Issue;
+use Model\Issue\Backlog;
 use Model\Issue\Detail as IssueDetail;
 use Model\Issue\Status;
 use Model\Issue\Type;
@@ -122,7 +123,12 @@ class Kanban extends \Controller
 
         // Find issues
         $issueModel = new IssueDetail;
-        $issues = $issueModel->find($filter);
+        $backlogModel = new Backlog;
+        $backlog = $backlogModel->load(['sprint_id' => intval($sprintId)]);
+        if ($backlog->issues) {
+            $backlogIds = "'" . implode("','", explode(',', trim($backlog->issues, '[]'))) . "'" ?: "'0'";
+        }
+        $issues = $issueModel->find($filter, $backlog->issues ? ['order' => "FIELD(id, $backlogIds), id"] : null);
         $return = [];
         foreach ($issues as $issue) {
             $return[] = [
