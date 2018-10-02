@@ -36,7 +36,7 @@ class Kanban extends \Controller
         }
 
         $sprint = new Sprint;
-        if (empty($params['id']) || !intval($params['id'])) {
+        if (empty($params['sprint']) || !intval($params['sprint'])) {
             $localDate = date('Y-m-d', View::instance()->utc2local());
             $sprint->load(['? BETWEEN start_date AND end_date', $localDate]);
         } else {

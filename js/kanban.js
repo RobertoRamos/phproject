@@ -1,7 +1,7 @@
 Vue.component('kanban-board', {
     props: {
-        'group-id': Number,
-        'sprint-id': Number
+        groupId: Number,
+        sprintId: Number
     },
     data: function () {
         return {
@@ -70,7 +70,7 @@ Vue.component('kanban-board', {
 
 Vue.component('kanban-issue', {
     props: {
-        'issue': Object
+        issue: Object
     },
     template: '\
         <div class="panel panel-default kanban-issue"\
