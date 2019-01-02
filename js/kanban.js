@@ -20,11 +20,11 @@ Vue.component('kanban-board', {
                 </div>\
                 <div class="panel-body">\
                     <draggable\
+                        :list="issuesByStatus(lane.id)"\
                         :options="{group: \'kanban\', draggable: \'.kanban-issue\'}"\
                         @end="onIssueMove">\
                         <kanban-issue\
-                            v-for="issue in issues"\
-                            v-if="issue.status == lane.id"\
+                            v-for="issue in issuesByStatus(lane.id)"\
                             :key="issue.id"\
                             :issue="issue" />\
                     </draggable>\
@@ -45,24 +45,29 @@ Vue.component('kanban-board', {
             let issue = this.issues[index];
 
             // TODO: update sort on backend
-            issue.status = status;
+            this.$set(issue, 'status', status);
             $.post(BASE + '/kanban/move/' + issue.id, {
                 status: status,
             });
-        }
+        },
+        issuesByStatus: function (statusId) {
+            return this.issues.filter(function (issue) {
+                return issue.status == statusId;
+            });
+        },
     },
     mounted: function () {
-        var component = this,
+        var vm = this,
             group = this.$props.groupId,
             sprint = this.$props.sprintId;
         $.get(BASE + '/kanban/boardLanes', function (data) {
-            component.swimlanes = data;
+            vm.swimlanes = data;
             $.get(BASE + '/kanban/boardData', {
                 group: group,
                 sprint: sprint,
             }, function (data) {
-                component.issues = data;
-                component.isLoading = false;
+                vm.issues = data;
+                vm.isLoading = false;
             }, 'json');
         }, 'json');
     }
